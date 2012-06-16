@@ -11,7 +11,7 @@ import ro.teamnet.hackaton.storage.Event;
  */
 public class SqlEventNode extends AbstractEventNode {
 	final static String DEFAULT_PREFIX = "t_event_";
-	final static String CREATE_TABLE_SQL = "create table %s(created TIMESTAMP(),value INT(10)) if not exists";
+	final static String CREATE_TABLE_SQL = "create table if not exists %s(created int8,value int4)";
 	final static String INSERT_SQL = "insert into %s(created,value) VALUES(%s, %s)";
 
 	final String tableName;
@@ -34,6 +34,7 @@ public class SqlEventNode extends AbstractEventNode {
 			);
 		} catch (DataAccessException e) {
 			// TODO handle
+			e.printStackTrace();
 		}
 	}
 }

@@ -6,7 +6,7 @@ package ro.teamnet.hackaton.storage;
  * @since 6/16/12 1:18 PM
  */
 public class Event {
-	final long timestamp;
+	final long timestamp; // ISO8601 (no of seconds passed since 1970 0:00:000 am)
 	final int number;
 
 	public Event(long timestamp, int number) {
