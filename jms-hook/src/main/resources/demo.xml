@@ -10,4 +10,8 @@
 
 	<import resource="disruptor.xml"/>
 
+	<beans:bean id="event-executor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<beans:property name="corePoolSize" value="20"/>
+	</beans:bean>
+
 </beans:beans>

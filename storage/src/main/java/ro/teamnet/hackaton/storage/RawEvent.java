@@ -5,7 +5,7 @@ package ro.teamnet.hackaton.storage;
  * @since 6/16/12 1:21 PM
  */
 public class RawEvent extends Event {
-	final String type;
+	String type;
 
 	public RawEvent(long timestamp, int number, String type) {
 		super(timestamp, number);
@@ -14,6 +14,10 @@ public class RawEvent extends Event {
 
 	public String getType() {
 		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	@Override

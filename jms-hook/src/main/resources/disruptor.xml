@@ -4,18 +4,58 @@
 			 xmlns:p="http://www.springframework.org/schema/p"
 			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			 xsi:schemaLocation="http://www.springframework.org/schema/beans
-								 http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+								 http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
 								 http://www.springframework.org/schema/integration
-								 http://www.springframework.org/schema/integration/spring-integration-2.1.xsd">
+								 http://www.springframework.org/schema/integration/spring-integration-2.1.xsd
+								 http://www.springframework.org/schema/p
+								 http://www.springframework.org/schema/p/spring-p-3.1.xsd">
 
 	<channel id="raw-event-input-channel"/>
 	<service-activator input-channel="raw-event-input-channel"
 	                   ref="rawEventGateway"
 	                   method="waitFor"/>
-	<beans:bean id="rawEventGateway" class="ro.teamnet.hackaton.storage.hook.DefaultJmsEventListener">
+	<beans:bean id="rawEventGateway" class="ro.teamnet.hackaton.storage.hook.DefaultEventListener">
 		<beans:constructor-arg ref="disruptor"/>
 	</beans:bean>
 
-	<beans:bean id="disruptor" class="ro.teamnet.hackaton.storage.hook.DemoDisruptor" factory-method="buildDisruptor"/>
+	<beans:bean id="executor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor" />
+
+	<beans:bean id="disruptor" class="ro.teamnet.hackaton.storage.hook.SpringifiedDisruptor" init-method="start">
+		<beans:constructor-arg>
+			<beans:bean class="ro.teamnet.hackaton.storage.hook.DefaultEventFactory"/>
+		</beans:constructor-arg>
+
+		<beans:constructor-arg value="4096"/>
+		<beans:constructor-arg ref="executor"/>
+
+		<beans:property name="eventHandlers">
+			<beans:list>
+				<beans:bean class="ro.teamnet.hackaton.storage.hook.EventStorageHandler">
+					<beans:constructor-arg ref="eventStorage"/>
+				</beans:bean>
+			</beans:list>
+		</beans:property>
+	</beans:bean>
+
+
+	<beans:bean id="eventStorage" class="ro.teamnet.hackaton.storage.SimpleEventStorage">
+		<beans:constructor-arg ref="cacheLoader"/>
+	</beans:bean>
+
+	<beans:bean id="cacheLoader" class="ro.teamnet.hackaton.storage.sql.SqlCacheLoader">
+		<beans:constructor-arg>
+			<beans:bean class="org.springframework.jdbc.core.JdbcTemplate">
+				<beans:constructor-arg ref="dataSource"/>
+			</beans:bean>
+		</beans:constructor-arg>
+	</beans:bean>
+
+	<!-- the DataSource (parameterized for configuration via a PropertyPlaceHolderConfigurer) -->
+    <beans:bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <beans:property name="driverClass" value="org.h2.Driver"/>
+        <beans:property name="jdbcUrl" value="jdbc:h2:mem:test"/>
+        <beans:property name="user" value="sa"/>
+        <beans:property name="password" value=""/>
+    </beans:bean>
 
 </beans:beans>
