@@ -9,7 +9,22 @@
     <version>0.1</version>
 	<modules>
 		<module>storage</module>
+		<module>storage-jackrabbit</module>
+		<module>storage-sql</module>
 	</modules>
 	<packaging>pom</packaging>
-    
+
+	<dependencies>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>11.0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 </project>
