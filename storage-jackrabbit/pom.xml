@@ -12,9 +12,19 @@
 	<artifactId>jackrabbit</artifactId>
 	<dependencies>
 		<dependency>
+			<groupId>SEG</groupId>
+			<artifactId>storage</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.apache.jackrabbit</groupId>
 			<artifactId>jackrabbit-core</artifactId>
 			<version>2.5.0</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.jcr</groupId>
+			<artifactId>jcr</artifactId>
+			<version>2.0</version>
 		</dependency>
 	</dependencies>
 

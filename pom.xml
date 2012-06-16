@@ -11,6 +11,7 @@
 		<module>storage</module>
 		<module>storage-jackrabbit</module>
 		<module>storage-sql</module>
+		<module>perf</module>
 	</modules>
 	<packaging>pom</packaging>
 
@@ -19,6 +20,11 @@
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>11.0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>3.1.1.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
