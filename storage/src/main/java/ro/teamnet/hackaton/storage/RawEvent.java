@@ -15,4 +15,15 @@ public class RawEvent extends Event {
 	public String getType() {
 		return type;
 	}
+
+	@Override
+	public String toString() {
+		final StringBuilder sb = new StringBuilder();
+		sb.append("RawEvent");
+		sb.append("{type='").append(type).append('\'');
+		sb.append(", timestamp=").append(timestamp);
+		sb.append(", value=").append(number);
+		sb.append('}');
+		return sb.toString();
+	}
 }
