@@ -25,14 +25,24 @@
 			<beans:bean class="ro.teamnet.hackaton.storage.hook.DefaultEventFactory"/>
 		</beans:constructor-arg>
 
-		<beans:constructor-arg value="4096"/>
+		<beans:constructor-arg value="16384"/>
 		<beans:constructor-arg ref="executor"/>
 
 		<beans:property name="eventHandlers">
 			<beans:list>
+
 				<beans:bean class="ro.teamnet.hackaton.storage.hook.EventStorageHandler">
 					<beans:constructor-arg ref="eventStorage"/>
+					<beans:constructor-arg value="2"/>
+					<beans:constructor-arg value="0"/>
 				</beans:bean>
+
+				<beans:bean class="ro.teamnet.hackaton.storage.hook.EventStorageHandler">
+					<beans:constructor-arg ref="eventStorage"/>
+					<beans:constructor-arg value="2"/>
+					<beans:constructor-arg value="1"/>
+				</beans:bean>
+
 			</beans:list>
 		</beans:property>
 	</beans:bean>
@@ -50,7 +60,6 @@
 		</beans:constructor-arg>
 	</beans:bean>
 
-	<!-- the DataSource (parameterized for configuration via a PropertyPlaceHolderConfigurer) -->
     <beans:bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <beans:property name="driverClass" value="org.h2.Driver"/>
         <beans:property name="jdbcUrl" value="jdbc:h2:mem:test"/>

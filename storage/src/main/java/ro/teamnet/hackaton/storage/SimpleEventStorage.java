@@ -20,7 +20,7 @@ public class SimpleEventStorage implements EventStorage {
 				.build(cacheLoader);
 	}
 
-	public void store(final RawEvent event) {
+	public synchronized void store(final RawEvent event) {
 		Preconditions.checkNotNull(event);
 		Preconditions.checkNotNull(event.getType());
 

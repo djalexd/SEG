@@ -27,7 +27,6 @@ public class SqlEventNode extends AbstractEventNode {
 	}
 
 	public void store(Event event) {
-		System.out.println("Writing event " + event);
 		// Just insert.
 		try {
 			jdbcOperations.execute(
